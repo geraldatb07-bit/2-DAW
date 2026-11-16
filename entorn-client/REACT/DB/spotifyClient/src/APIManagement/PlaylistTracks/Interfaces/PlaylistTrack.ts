@@ -3,3 +3,4 @@ export interface GETPlaylistTrack {
     playlist_id: string;
     track_id: string;
 }
+
