@@ -9,9 +9,9 @@ const SongRow = (props: SongRowProps) => {
             <td>Títol: {props.title}</td>
             <td>Artist: {props.artist}</td>
             <td>Duration: {formatDuration(props.duration)}</td>
-            <td>
+            {props.onPlay && <td>
                 <button onClick={props.onPlay}>Play</button>
-            </td>
+            </td>}
         </tr>
     )
 }

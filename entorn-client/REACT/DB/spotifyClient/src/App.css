@@ -33,6 +33,10 @@ table {
     padding: 0;
 }
 
+a {
+    display: block;
+}
+
 @media (max-width: 768px) {
     table,
     .playlist-component,
