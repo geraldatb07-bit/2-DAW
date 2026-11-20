@@ -11,6 +11,8 @@ import type { Like } from "../../components/songs/Types/likes";
 import type { TrackView } from "../../components/songs/Types/TrackView";
 import { ENV } from "../../Config/env";
 import { tracks } from "../../Data/track/track.data";
+import type { HistoryView } from "../../components/history/Types/HistoryView";
+import HistoryCard from "../../components/history/HistoryCard";
 
 
 
@@ -31,6 +33,8 @@ const Play = () => {
     const [tracks, setTracks] = useState<GETTrack[]>([]);
 
     const [isPlaying, setIsPlaying] = useState(false);
+
+    const [history, setHistory] = useState<HistoryView[]>([]);
 
     const [playlists, setPlaylists] = useState<GETPlaylist[]>([]);
 
@@ -189,6 +193,17 @@ const Play = () => {
         setIsPlaying(!isPlaying);
     }
 
+    function afegirAlHistorial(song: {title: string, artist: string, duration: number}) {
+    setHistory(prev => [
+      {
+        title: song.title,
+        artist: song.artist,
+        duration: song.duration,
+        playedTime: new Date().toLocaleString('ca-ES')
+      },
+      ...prev
+    ]);
+  }
 
     function handlePlayTrack(selectedTrack: GETTrack): void {
         setTrack({
@@ -201,6 +216,8 @@ const Play = () => {
         });
 
         setIsPlaying(true);
+        afegirAlHistorial(selectedTrack);
+
     }
 
     return (
@@ -243,6 +260,7 @@ const Play = () => {
                         isPlaying={isPlaying}
                         trackInfo={track}
                         onStop={() => setIsPlaying(false)} />
+                    <HistoryCard history={history} />
                 </aside>
             </main>
         </>

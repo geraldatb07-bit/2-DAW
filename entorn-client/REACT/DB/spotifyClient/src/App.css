@@ -33,6 +33,22 @@ table {
     padding: 0;
 }
 
+.history-component {
+    position: static;
+    width: min(100%, 700px);
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #ccc;
+}
+
+.history-component table {
+    position: static;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+
 a {
     display: block;
 }
