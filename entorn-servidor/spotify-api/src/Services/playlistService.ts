@@ -115,7 +115,8 @@ export async function deletePlaylist(idPlaylist: string): Promise<deleteSuccessS
     const request: sql.Request = pool.request();
     request.input("id", UniqueIdentifier, idPlaylist);
 
-    const result: IResult<PlaylistBD> = await request.query(`DELETE FROM Playlist WHERE Playlist.id = @id`);
+    await request.query(`DELETE FROM PlaylistTracks WHERE playlist_id = @id;`);
+    const result: IResult<PlaylistBD> = await request.query(`DELETE FROM Playlist WHERE id = @id;`);
 
     if (result.rowsAffected[0] === 0) {
         return {
