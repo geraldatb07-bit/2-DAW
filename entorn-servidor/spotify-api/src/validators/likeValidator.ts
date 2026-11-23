@@ -1,12 +1,12 @@
-import { Like } from "../interfaces/Likes/like";
+import { LikeRequest } from "../interfaces/Likes/like";
 
 
-export function isValidLike(like: Like): boolean {
+export function isValidLike(like: LikeRequest): boolean {
     if (!like) {
         return false;
     }
 
-    if (!like.user || !like.track) {
+    if (!like.user_id || !like.track_id || (like.likeTrack !== 1 && like.likeTrack !== -1)) {
         return false
     }
 
