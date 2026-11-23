@@ -12,7 +12,7 @@ const SongRow = (props: SongRowProps) => {
             artist_id: props.artist_id,
             duration: props.duration
         }
-        props.edit(song)
+        props.edit?.(song)
     }
     return (
         <tr>

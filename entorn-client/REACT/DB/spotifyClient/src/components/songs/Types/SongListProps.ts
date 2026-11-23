@@ -4,5 +4,5 @@ import type { Track } from "../../../Model/Track";
 export interface SongListProps {
     tracks: GETTrack[];
     onPlayTrack?: (track: GETTrack) => void;
-    edit: (t:Track) => void;
+    edit?: (t:Track) => void;
 }
