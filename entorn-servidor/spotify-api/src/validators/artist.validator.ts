@@ -1,17 +1,13 @@
-import { countries } from "../data/country/country.data";
 import { Artist } from "../interfaces/artist/artist";
 import { MAXPSEUDONIM } from "../interfaces/artist/artist.constants";
-import { CountryBD } from "../interfaces/Country/countryBD";
 import { MAXARTIST } from "../interfaces/track/track.constants";
 
 
 
 export function isValidArtist(artist: Artist): boolean | string | undefined {
+    let correcte: boolean = true;
 
-    if (!artist) {
-        return false;
-    }
-    if (!artist.nom || !artist.pseudonim || !artist.pais) {
+    if (!artist.nom || !artist.pseudonim || !artist.pais_id) {
         return false
     }
 
@@ -24,13 +20,6 @@ export function isValidArtist(artist: Artist): boolean | string | undefined {
         && longPseudonim <= MAXPSEUDONIM
 
     if (!dadesOK) {
-        return false;
-    }
-
-    const countryExists: CountryBD | undefined = countries.find(
-        (c: CountryBD) => c.countryName.trim().toLowerCase() === artist.pais.countryName.trim().toLowerCase()
-    );
-    if (!countryExists) {
         return false;
     }
 

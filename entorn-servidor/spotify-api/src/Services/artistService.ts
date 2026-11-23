@@ -1,6 +1,5 @@
 import sql, { ConnectionPool, IResult, UniqueIdentifier } from "mssql";
 import { getConnection } from "../config/database";
-import { countries } from "../data/country/country.data";
 import { createSuccessService } from "../interfaces/error/createSuccessService";
 import { deleteSuccessService } from "../interfaces/error/deleteSuccessService";
 import { errorService } from "../interfaces/error/errorService";
@@ -41,28 +40,25 @@ export async function getArtistById(idArtist: string): Promise<selectSuccessServ
 
 export async function createArtist(artist: Artist): Promise<createSuccessService | errorService> {
     if(!isValidArtist(artist)) {
-    return { success: false, code: 400, message: "Invalid artist data." };
-}
+        return { success: false, code: 400, message: "Invalid artist data." };
+    }
 
-const country = countries.find((c) => c.countryName.trim().toLowerCase() === artist.pais.countryName.trim().toLowerCase());
-if (!country) {
-    return { success: false, code: 404, message: "Country not found" };
-}
+   
 
-const pool: ConnectionPool = await getConnection();
-const request: sql.Request = pool.request();
-const queryText = `INSERT INTO Artist(name, pseudonym, country_id) VALUES (@name, @pseudonym, @country_id)`;
+    const pool: ConnectionPool = await getConnection();
+    const request: sql.Request = pool.request();
+    const queryText = `INSERT INTO Artist(name, pseudonym, country_id) VALUES (@name, @pseudonym, @country_id)`;
 
-request.input("name", sql.NVarChar, artist.nom.trim().replace(/\s+/g, " "));
-request.input("pseudonym", sql.NVarChar, artist.pseudonim.trim().replace(/\s+/g, " "));
-request.input("country_id", UniqueIdentifier, country.id);
+    request.input("name", sql.NVarChar, artist.nom.trim().replace(/\s+/g, " "));
+    request.input("pseudonym", sql.NVarChar, artist.pseudonim.trim().replace(/\s+/g, " "));
+    request.input("country_id", UniqueIdentifier, artist.pais_id);
 
-const result: IResult<number> = await request.query(queryText);
+    const result: IResult<number> = await request.query(queryText);
 
-return {
-    success: true,
-    code: 201,
-    data: result.rowsAffected[0]
+    return {
+        success: true,
+        code: 201,
+        data: result.rowsAffected[0]
 };
 }
 
@@ -75,10 +71,7 @@ export async function updateArtist(idArtist: string, artist: Artist): Promise<up
         };
     }
 
-    const country = countries.find((c) => c.countryName.trim().toLowerCase() === artist.pais.countryName.trim().toLowerCase());
-    if (!country) {
-        return { success: false, code: 404, message: "Country not found" };
-    }
+
 
     const pool: ConnectionPool = await getConnection();
     const request: sql.Request = pool.request();
@@ -86,7 +79,7 @@ export async function updateArtist(idArtist: string, artist: Artist): Promise<up
 
     request.input("name", sql.NVarChar, artist.nom.trim().replace(/\s+/g, " "));
     request.input("pseudonym", sql.NVarChar, artist.pseudonim.trim().replace(/\s+/g, " "));
-    request.input("country_id", UniqueIdentifier, country.id);
+    request.input("country_id", UniqueIdentifier, artist.pais_id);
     request.input("id", UniqueIdentifier, idArtist);
 
     const result: IResult<number> = await request.query(queryText);

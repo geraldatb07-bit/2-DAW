@@ -6,6 +6,7 @@ import Menu from './components/PageStructure/menu/Menu'
 import Admin from './Pages/Admin/Admin'
 import SongManagement from './Pages/Admin/SongManagement'
 import PlaylistManagement from './Pages/Admin/PlaylistManagement'
+import ArtistManagement from './Pages/Admin/ArtistManagement'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/Admin" element={<Admin />}>
           <Route path="SongManagement" element={<SongManagement />} />
           <Route path="PlaylistManagement" element={<PlaylistManagement />} />
+          <Route path="ArtistManagement" element={<ArtistManagement />} />
         </Route>
       </Routes>
     </BrowserRouter>

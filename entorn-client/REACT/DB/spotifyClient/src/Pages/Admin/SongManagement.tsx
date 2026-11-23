@@ -3,16 +3,16 @@ import type { GETTrack } from "../../APIManagement/Tracks/Interfaces/Track";
 import ListSongs from "../../components/songs/ListSongs";
 import { ENV } from "../../Config/env";
 import AddSongForm from "../../components/songs/AddSongForm";
-import type { FormState } from "./Types/FormState";
 import type { Track } from "../../Model/Track";
 import type { TrackCreate } from "../../APIManagement/Tracks/Interfaces/TrackCreate";
 import { PostTrack } from "../../APIManagement/Tracks/PostTrack";
 import { PutTrack } from "../../APIManagement/Tracks/PutTrack";
+import type { SongFormState } from "./Types/SongFormState";
 
 const SongManagement = () => {
 
     const [tracks, setTracks] = useState<GETTrack[]>([]);
-    const [newSong, setNewSong] = useState<FormState>({ mode: "none" });
+    const [newSong, setNewSong] = useState<SongFormState>({ mode: "none" });
 
     async function carregarDadesTrack() {
         const resposta: Response = await fetch(`${ENV.API_BASE_URL}/tracks`);

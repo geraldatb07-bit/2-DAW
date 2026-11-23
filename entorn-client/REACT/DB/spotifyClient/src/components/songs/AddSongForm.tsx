@@ -7,7 +7,6 @@ import type { AddSongFormProps } from "./Types/AddSongFormProps";
 const AddSongFrom = (props: AddSongFormProps) => {
 
     const [artists, setArtists] = useState<GETArtist[]>([]);
-    const [submissionError, setSubmissionError] = useState("");
 
     async function carregarArtists() {
         const resposta: Response = await fetch(`${ENV.API_BASE_URL}/artists`);
@@ -29,12 +28,7 @@ const AddSongFrom = (props: AddSongFormProps) => {
             artist: String(formData.get("artist") ?? ""),
             duration: Number(formData.get("duration"))
         }
-        setSubmissionError("");
-        try {
-            await props.submit(song);
-        } catch (error) {
-            setSubmissionError(error instanceof Error ? error.message : "No s'ha pogut desar la cançó.");
-        }
+         props.submit(song);
     }
 
     return (
@@ -77,11 +71,9 @@ const AddSongFrom = (props: AddSongFormProps) => {
                                 </select>
                                 : <></>
                         }
-                        <button>add</button>
                     </label>
                 </p>
                 <button type="submit">Desa</button>
-                {submissionError && <p role="alert">{submissionError}</p>}
             </form>
         </>
     )

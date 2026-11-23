@@ -1,6 +1,6 @@
 import type { Track } from "../../../Model/Track";
 
-export type FormState =
+export type SongFormState =
     { mode: "none" } |
     { mode: "new" } |
     {
