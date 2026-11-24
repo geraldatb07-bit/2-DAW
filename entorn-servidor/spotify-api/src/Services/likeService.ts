@@ -17,7 +17,7 @@ export async function createLike(likeRequest: LikeRequest): Promise<createSucces
 
     request.input("user_id", UniqueIdentifier, likeRequest.user_id);
     request.input("track_id", UniqueIdentifier, likeRequest.track_id);
-    request.input("likeTrack", sql.Int, likeRequest.likeTrack);
+    request.input("likeTrack", sql.Numeric, likeRequest.likeTrack);
 
     const result: IResult<number> = await request.query(queryText);
 
@@ -35,7 +35,7 @@ export async function getLikes(trackId: string): Promise<selectSuccessService<nu
 
 
     const result: IResult<{ totalLikes: number }> = await request.query(`
-        SELECT COALESCE(SUM(likeTrack), 0) AS totalLikes
+        SELECT SUM(likeTrack) AS totalLikes
         FROM Likes
         WHERE track_id = @trackId
         `);

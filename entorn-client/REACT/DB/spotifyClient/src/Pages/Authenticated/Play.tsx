@@ -13,6 +13,9 @@ import { ENV } from "../../Config/env";
 import { tracks } from "../../Data/track/track.data";
 import type { HistoryView } from "../../components/history/Types/HistoryView";
 import HistoryCard from "../../components/history/HistoryCard";
+import { PostLike } from "../../APIManagement/Likes/PostLike";
+import { GetLike } from "../../APIManagement/Likes/GetLike";
+import type { LikeCreate } from "../../APIManagement/Likes/Interfaces/LikeCreate";
 
 
 
@@ -53,20 +56,19 @@ const Play = () => {
         }
     )
 
-
-
     async function carregarDadesTrack() {
         const resposta: Response = await fetch(`${ENV.API_BASE_URL}/tracks`);
         const listTrack: GETTrack[] = await resposta.json() as GETTrack[];
         setTracks(listTrack);
 
         if (listTrack.length > 0) {
+            const totalLikes = await GetLike(listTrack[0].id);
             setTrack({
                 ...listTrack[0],
                 reproduccions: 0,
                 likes: {
                     like: false,
-                    totalLikes: 0
+                    totalLikes: totalLikes
                 }
             });
         }
@@ -109,12 +111,13 @@ const Play = () => {
         }, []
     )
 
-    function handleClickRandomSong() {
+    async function handleClickRandomSong() {
+        const totalLikes = await GetLike(tracks[randomIndex].id);
         const trackRandom: TrackView = {
             ...tracks[randomIndex],
             "likes": {
                 "like": false,
-                "totalLikes": 0
+                "totalLikes": totalLikes
             },
             "reproduccions": randomReproduccions,
         }
@@ -153,7 +156,7 @@ const Play = () => {
         console.log(result)
     }
 
-    function gestionarLikes() {
+    async function gestionarLikes() {
         const tr = (prev: TrackView): TrackView => {
 
             let increment: number = 1;
@@ -170,7 +173,18 @@ const Play = () => {
                 "likes": likeObj
             }
         }
-        setTrack(tr);
+
+        const likeTrack: 1 | -1 = track.likes.like ? -1 : 1;
+        const newLike: LikeCreate = {
+            user_id: "EB04BDE8-C395-4831-BB34-3CB65749DD3A",
+            track_id: track.id,
+            likeTrack: likeTrack
+        };
+
+        const ok = await PostLike(newLike);
+        if (ok) {
+            setTrack(tr);
+        }
     }
 
     function handleClickReset() {
@@ -205,13 +219,14 @@ const Play = () => {
     ]);
   }
 
-    function handlePlayTrack(selectedTrack: GETTrack): void {
+    async function handlePlayTrack(selectedTrack: GETTrack): Promise<void> {
+        const totalLikes = await GetLike(selectedTrack.id);
         setTrack({
             ...selectedTrack,
             reproduccions: 0,
             likes: {
                 like: false,
-                totalLikes: 0
+                totalLikes: totalLikes
             }
         });
 
