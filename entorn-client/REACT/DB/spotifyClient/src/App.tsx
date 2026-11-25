@@ -7,6 +7,9 @@ import Admin from './Pages/Admin/Admin'
 import SongManagement from './Pages/Admin/SongManagement'
 import PlaylistManagement from './Pages/Admin/PlaylistManagement'
 import ArtistManagement from './Pages/Admin/ArtistManagement'
+import UserManagement from './Pages/Admin/UserManagement'
+import FullSongsHistory from './Pages/Admin/fullSongsHistory'
+
 
 function App() {
   return (
@@ -24,6 +27,8 @@ function App() {
           <Route path="SongManagement" element={<SongManagement />} />
           <Route path="PlaylistManagement" element={<PlaylistManagement />} />
           <Route path="ArtistManagement" element={<ArtistManagement />} />
+          <Route path="UserManagement" element={<UserManagement/>} />
+          <Route path="FullSongsHistory" element={<FullSongsHistory />} />
         </Route>
       </Routes>
     </BrowserRouter>
