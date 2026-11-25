@@ -1,7 +1,7 @@
 import type { LikeCreate } from "./Interfaces/LikeCreate";
 import { ENV } from "../../Config/env";
 
-export async function PostLike(newLike: LikeCreate): Promise<boolean> {
+export async function PostLike(newLike: LikeCreate): Promise<void> {
     const response: Response = await fetch(
         `${ENV.API_BASE_URL}/likes`,
         {
@@ -11,5 +11,4 @@ export async function PostLike(newLike: LikeCreate): Promise<boolean> {
             },
             body: JSON.stringify(newLike)
         });
-    return response.ok;
 }

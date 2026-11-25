@@ -1,4 +1,4 @@
-export interface AddHistory{
+export interface HistoryCreate{
     user:string;
     track:string;
 }

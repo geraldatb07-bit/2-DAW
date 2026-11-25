@@ -10,6 +10,7 @@ import { playlistsRouter } from "./routes/playlistRoutes";
 import { playlistTrackRouter } from "./routes/playlistTrackRoutes";
 import { albumTrackRouter } from "./routes/albumTrackRoutes";
 import { likeRouter } from "./routes/likeRoutes";
+import { historyRouter } from "./routes/historyRoutes";
 
 
 export const app: Express = express();
@@ -22,11 +23,13 @@ app.get("/", (_req: Request, res: Response) => {
 
 app.use("/tracks", trackRouter);
 
-app.use("/artists", artistRouter)
+app.use("/artists", artistRouter);
 
 app.use("/users", userRouter);
 
 app.use("/countries", countryRouter);
+
+app.use("/history", historyRouter);
 
 app.use("/playlists", playlistsRouter);
 
@@ -34,4 +37,4 @@ app.use("/playlisttracks", playlistTrackRouter);
 
 app.use("/albumstracks", albumTrackRouter);
 
-app.use("/likes", likeRouter)
+app.use("/likes", likeRouter);

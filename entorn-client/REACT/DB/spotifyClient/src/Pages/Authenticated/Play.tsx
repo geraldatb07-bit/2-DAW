@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { AddHistory } from "../../APIManagement/History/Interfaces/HistoryCreate";
+import type { HistoryCreate } from "../../APIManagement/History/Interfaces/HistoryCreate";
 import type { GETPlaylist } from "../../APIManagement/Playlists/Interfaces/Playlist";
 import type { GETPlaylistTrack } from "../../APIManagement/PlaylistTracks/Interfaces/PlaylistTrack";
 import type { GETTrack } from "../../APIManagement/Tracks/Interfaces/Track";
@@ -135,7 +135,7 @@ const Play = () => {
 
         setTrack(tr);
 
-        const newHistory: AddHistory = {
+        const newHistory: HistoryCreate = {
             user: "C2CFE8EE-F0CF-4C57-A256-E3495D7CA7BC",
             track: tracks[0].id
         }
@@ -173,6 +173,7 @@ const Play = () => {
                 "likes": likeObj
             }
         }
+        setTrack(tr);
 
         const likeTrack: 1 | -1 = track.likes.like ? -1 : 1;
         const newLike: LikeCreate = {
@@ -180,11 +181,7 @@ const Play = () => {
             track_id: track.id,
             likeTrack: likeTrack
         };
-
-        const ok = await PostLike(newLike);
-        if (ok) {
-            setTrack(tr);
-        }
+        await PostLike(newLike);
     }
 
     function handleClickReset() {
