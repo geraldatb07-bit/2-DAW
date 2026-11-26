@@ -1,8 +1,9 @@
+import { ENV } from "../../Config/env";
 import type { TrackCreate } from "./Interfaces/TrackCreate";
 
 export async function PostTrack(newTrack: TrackCreate){
     const response: Response = await fetch(
-        "http://localhost:3000/tracks",
+        `${ENV.API_BASE_URL}/tracks`,
         {
             method: "POST",
             headers: {

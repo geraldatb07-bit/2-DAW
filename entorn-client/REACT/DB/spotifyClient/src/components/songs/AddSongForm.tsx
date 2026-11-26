@@ -28,7 +28,7 @@ const AddSongFrom = (props: AddSongFormProps) => {
             artist: String(formData.get("artist") ?? ""),
             duration: Number(formData.get("duration"))
         }
-         props.submit(song);
+        props.submit(song);
     }
 
     return (
