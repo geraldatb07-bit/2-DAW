@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { GETPlaylist } from "../../APIManagement/Playlists/Interfaces/Playlist";
+import type { GETPlaylist } from "../../APIManagement/Playlists/Interfaces/GETPlaylist";
 import { ENV } from "../../Config/env";
 import { DeletePlaylist } from "../../APIManagement/Playlists/DeletePlaylist";
 
