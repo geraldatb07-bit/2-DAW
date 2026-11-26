@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { HistoryCreate } from "../../APIManagement/History/Interfaces/HistoryCreate";
-import type { GETPlaylist } from "../../APIManagement/Playlists/Interfaces/Playlist";
+import type { GETPlaylist } from "../../APIManagement/Playlists/Interfaces/GETPlaylist";
 import type { GETPlaylistTrack } from "../../APIManagement/PlaylistTracks/Interfaces/PlaylistTrack";
 import type { GETTrack } from "../../APIManagement/Tracks/Interfaces/Track";
 import PlayingCard from "../../components/playing/PlayingCard";
@@ -141,7 +141,7 @@ const Play = () => {
         }
 
         const response: Response = await fetch(
-            "http://localhost:3000/tracks/user/history",
+            `${ENV.API_BASE_URL}/tracks/user/history`,
             {
                 method: "POST",
                 headers: {
@@ -253,7 +253,6 @@ const Play = () => {
                         </p>
                 }
                 <PlaylistCard
-                    playlists={playlists}
                     onSelectPlaylist={handleSelectPlaylist}
                     selectedPlaylistTitle={selectedPlaylistTitle}
                     tracks={playlistTracks}

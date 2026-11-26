@@ -14,6 +14,7 @@ const SongRow = (props: SongRowProps) => {
         }
         props.edit?.(song)
     }
+
     return (
         <tr>
             <td>Títol: {props.title}</td>
@@ -21,6 +22,7 @@ const SongRow = (props: SongRowProps) => {
             <td>Duration: {formatDuration(props.duration)}</td>
             {props.onPlay && <td><button onClick={props.onPlay}>Play</button></td>}
             <td><button onClick={editar} >Edit</button></td>
+            {props.delete && <td><button onClick={() => props.delete?.(props.id)}>Eliminar</button></td>}
         </tr>
     )
 }

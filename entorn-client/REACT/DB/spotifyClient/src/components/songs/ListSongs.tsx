@@ -17,6 +17,7 @@ const ListSongs = (props: SongListProps) => {
                         artist_id={t.artist_id}
                         duration={t.duration}
                         edit = {props.edit}
+                        delete = {props.delete}
                     />
                 }
             ) 

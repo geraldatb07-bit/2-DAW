@@ -8,4 +8,5 @@ export interface SongRowProps {
     duration: number;
     onPlay?: () => void;
     edit?: (t:Track) => void;
+    delete?: (id:string) => void;
 }

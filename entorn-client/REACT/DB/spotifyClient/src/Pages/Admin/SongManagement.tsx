@@ -8,6 +8,7 @@ import type { TrackCreate } from "../../APIManagement/Tracks/Interfaces/TrackCre
 import { PostTrack } from "../../APIManagement/Tracks/PostTrack";
 import { PutTrack } from "../../APIManagement/Tracks/PutTrack";
 import type { SongFormState } from "./Types/SongFormState";
+import { deleteTrack } from "../../APIManagement/Tracks/DeleteTrack";
 
 const SongManagement = () => {
 
@@ -32,6 +33,11 @@ const SongManagement = () => {
             }
         );
     }
+
+    async function deleteSong(id: string) {
+        await deleteTrack(id);
+        await carregarDadesTrack();
+    } 
 
     async function save(t:TrackCreate){
         await PostTrack(t);
@@ -67,6 +73,7 @@ const SongManagement = () => {
                                 <ListSongs
                                     tracks={tracks}
                                     edit={edit}
+                                    delete={deleteSong}
                                 />
                             </tbody>
                         </table>

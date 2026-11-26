@@ -5,4 +5,5 @@ export interface SongListProps {
     tracks: GETTrack[];
     onPlayTrack?: (track: GETTrack) => void;
     edit?: (t:Track) => void;
+    delete?: (id:string) => void;
 }
