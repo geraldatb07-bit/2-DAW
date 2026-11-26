@@ -46,18 +46,11 @@ export async function createPlaylist(playlist: Playlist): Promise<createSuccessS
     const pool: ConnectionPool = await getConnection();
     const request: sql.Request = pool.request();
 
-    request.input("email", sql.NVarChar, playlist.user.email);
-    const userQuery = await request.query(`SELECT id FROM [User] WHERE email = @email`);
 
-    if (userQuery.recordset.length === 0) {
-        return { success: false, code: 404, message: "User not found" };
-    }
-
-    const userId = userQuery.recordset[0].id;
     const queryText = `INSERT INTO Playlist(title, user_id) VALUES (@title, @user_id)`;
 
     request.input("title", sql.NVarChar, playlist.title.trim().replace(/\s+/g, " "));
-    request.input("user_id", UniqueIdentifier, userId);
+    request.input("user_id", UniqueIdentifier, playlist.user_id);
 
     const result: IResult<number> = await request.query(queryText);
 
@@ -79,18 +72,11 @@ export async function updatePlaylist(idPlaylist: string, playlist: Playlist): Pr
 
     const pool: ConnectionPool = await getConnection();
     const request: sql.Request = pool.request();
-    request.input("email", sql.NVarChar, playlist.user.email);
-    const userQuery = await request.query(`SELECT id FROM [User] WHERE email = @email`);
-
-    if (userQuery.recordset.length === 0) {
-        return { success: false, code: 404, message: "User not found" };
-    }
-
-    const userId = userQuery.recordset[0].id;
+   
     const queryText = `UPDATE Playlist SET title=@title, user_id=@user_id WHERE id=@id`;
 
     request.input("title", sql.NVarChar, playlist.title.trim().replace(/\s+/g, " "));
-    request.input("user_id", UniqueIdentifier, userId);
+    request.input("user_id", UniqueIdentifier, playlist.user_id);
     request.input("id", UniqueIdentifier, idPlaylist);
 
     const result: IResult<number> = await request.query(queryText);

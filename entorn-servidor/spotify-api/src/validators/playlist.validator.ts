@@ -1,10 +1,8 @@
 import { Playlist } from "../interfaces/Playlist/playlist";
 
-export function isValidPlaylist(playlist: Playlist): boolean {
-    return Boolean(
-        playlist
-        && playlist.title?.trim()
-        && playlist.user?.email?.trim()
-        && playlist.user.country?.countryName?.trim()
-    );
+export function isValidPlaylist(p: Playlist): boolean | string | undefined {
+    if (!p || !p.title || !p.user_id) {
+        return false;
+    }
+    return true;
 }
