@@ -1,4 +1,4 @@
 export const GetIdUser = (): string => {
-    return "EB04BDE8-C395-4831-BB34-3CB65749DD3A"
+    return "C2CFE8EE-F0CF-4C57-A256-E3495D7CA7BC"
 
 }

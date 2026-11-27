@@ -16,6 +16,7 @@ import HistoryCard from "../../components/history/HistoryCard";
 import { PostLike } from "../../APIManagement/Likes/PostLike";
 import { GetLike } from "../../APIManagement/Likes/GetLike";
 import type { LikeCreate } from "../../APIManagement/Likes/Interfaces/LikeCreate";
+import { GetIdUser } from "../../APIManagement/Users/userFunctions";
 
 
 
@@ -136,7 +137,7 @@ const Play = () => {
         setTrack(tr);
 
         const newHistory: HistoryCreate = {
-            user: "C2CFE8EE-F0CF-4C57-A256-E3495D7CA7BC",
+            user: GetIdUser(),
             track: tracks[0].id
         }
 
@@ -177,7 +178,7 @@ const Play = () => {
 
         const likeTrack: 1 | -1 = track.likes.like ? -1 : 1;
         const newLike: LikeCreate = {
-            user_id: "EB04BDE8-C395-4831-BB34-3CB65749DD3A",
+            user_id: GetIdUser(),
             track_id: track.id,
             likeTrack: likeTrack
         };
@@ -204,17 +205,17 @@ const Play = () => {
         setIsPlaying(!isPlaying);
     }
 
-    function afegirAlHistorial(song: {title: string, artist: string, duration: number}) {
-    setHistory(prev => [
-      {
-        title: song.title,
-        artist: song.artist,
-        duration: song.duration,
-        playedTime: new Date().toLocaleString('ca-ES')
-      },
-      ...prev
-    ]);
-  }
+    function afegirAlHistorial(song: { title: string, artist: string, duration: number }) {
+        setHistory(prev => [
+            {
+                title: song.title,
+                artist: song.artist,
+                duration: song.duration,
+                playedTime: new Date().toLocaleString('ca-ES')
+            },
+            ...prev
+        ]);
+    }
 
     async function handlePlayTrack(selectedTrack: GETTrack): Promise<void> {
         const totalLikes = await GetLike(selectedTrack.id);
@@ -259,7 +260,7 @@ const Play = () => {
                     onPlayTrack={handlePlayTrack}
                 />
                 <aside>
-                
+
                     <h1>Spotify Songs</h1>
                     <SongCard trackInfo={track}
                         play={() => gestionarReproduccio()}
