@@ -10,7 +10,6 @@ import SongCard from "../../components/songs/SongCard";
 import type { Like } from "../../components/songs/Types/likes";
 import type { TrackView } from "../../components/songs/Types/TrackView";
 import { ENV } from "../../Config/env";
-import { tracks } from "../../Data/track/track.data";
 import type { HistoryView } from "../../components/history/Types/HistoryView";
 import HistoryCard from "../../components/history/HistoryCard";
 import { PostLike } from "../../APIManagement/Likes/PostLike";
@@ -21,9 +20,7 @@ import { GetIdUser } from "../../APIManagement/Users/userFunctions";
 
 
 
-export const randomIndex = Math.floor(Math.random() * tracks.length);
-export const randomTrack = tracks[randomIndex];
-export const randomReproduccions = Math.floor(Math.random() * 5000);
+
 
 export function formatDuration(duration: number): string {
     const minutes = Math.floor(duration / 60);
@@ -46,16 +43,7 @@ const Play = () => {
 
     const [selectedPlaylistTitle, setSelectedPlaylistTitle] = useState('');
 
-    const [track, setTrack] = useState<TrackView>(
-        {
-            ...tracks[randomIndex],
-            "reproduccions": randomReproduccions,
-            "likes": {
-                "like": false,
-                "totalLikes": 0
-            }
-        }
-    )
+    const [track, setTrack] = useState<TrackView | null>(null);
 
     async function carregarDadesTrack() {
         const resposta: Response = await fetch(`${ENV.API_BASE_URL}/tracks`);
@@ -113,6 +101,8 @@ const Play = () => {
     )
 
     async function handleClickRandomSong() {
+        const randomIndex = Math.floor(Math.random() * tracks.length);
+        const randomReproduccions = Math.floor(Math.random() * 5000);
         const totalLikes = await GetLike(tracks[randomIndex].id);
         const trackRandom: TrackView = {
             ...tracks[randomIndex],
@@ -126,7 +116,7 @@ const Play = () => {
         setTrack(trackRandom);
     }
 
-    async function incrementarReproduccions() {
+    /* async function incrementarReproduccions() {
         const tr = (prev: TrackView): TrackView => {
             return {
                 ...prev,
@@ -155,9 +145,9 @@ const Play = () => {
         }
         const result = await response.json();
         console.log(result)
-    }
+    } */
 
-    async function gestionarLikes() {
+/*     async function gestionarLikes() {
         const tr = (prev: TrackView): TrackView => {
 
             let increment: number = 1;
@@ -183,9 +173,9 @@ const Play = () => {
             likeTrack: likeTrack
         };
         await PostLike(newLike);
-    }
+    } */
 
-    function handleClickReset() {
+/*     function handleClickReset() {
         setTrack(prev => ({
             ...prev,
             reproduccions: 0,
@@ -195,15 +185,15 @@ const Play = () => {
             }
         }));
     }
+ */
 
-
-    function gestionarReproduccio() {
+/*     function gestionarReproduccio() {
         if (!isPlaying) {
             incrementarReproduccions();
         }
 
         setIsPlaying(!isPlaying);
-    }
+    } */
 
     function afegirAlHistorial(song: { title: string, artist: string, duration: number }) {
         setHistory(prev => [
@@ -259,7 +249,7 @@ const Play = () => {
                     tracks={playlistTracks}
                     onPlayTrack={handlePlayTrack}
                 />
-                <aside>
+{/*                 <aside>
 
                     <h1>Spotify Songs</h1>
                     <SongCard trackInfo={track}
@@ -273,7 +263,7 @@ const Play = () => {
                         trackInfo={track}
                         onStop={() => setIsPlaying(false)} />
                     <HistoryCard history={history} />
-                </aside>
+                </aside> */}
             </main>
         </>
     )
