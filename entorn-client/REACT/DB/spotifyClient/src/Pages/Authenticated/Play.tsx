@@ -33,7 +33,6 @@ const Play = () => {
 
     const [tracks, setTracks] = useState<GETTrack[]>([]);
 
-    const [isPlaying, setIsPlaying] = useState(false);
 
     const [history, setHistory] = useState<HistoryView[]>([]);
 
@@ -218,7 +217,6 @@ const Play = () => {
             }
         });
 
-        setIsPlaying(true);
         afegirAlHistorial(selectedTrack);
 
     }
