@@ -247,8 +247,18 @@ const Play = () => {
                     tracks={playlistTracks}
                     onPlayTrack={handlePlayTrack}
                 />
-{/*                 <aside>
-
+                {
+                    track === null ? 
+                    <></> :
+                    <aside>
+                        <PlayingCard
+                            trackInfo={track}
+                            onStop={() => setTrack(null)} />
+                        <HistoryCard history={history} />
+                    </aside>
+                }
+                {
+                /*<aside>
                     <h1>Spotify Songs</h1>
                     <SongCard trackInfo={track}
                         play={() => gestionarReproduccio()}
@@ -261,7 +271,9 @@ const Play = () => {
                         trackInfo={track}
                         onStop={() => setIsPlaying(false)} />
                     <HistoryCard history={history} />
-                </aside> */}
+                </aside> */
+                }
+
             </main>
         </>
     )
